@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Peer Radar — pre-token protocols ranked by implied value</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true"></span>
+    <div>
+      <h1>Peer Radar</h1>
+      <p class="tagline">Pre-token protocols, valued against the peers that already trade.</p>
+    </div>
+  </div>
+  <div class="snapshot-note" id="snapshot-note"></div>
+</header>
+<main>
+  <section class="stats" id="stats" aria-label="Snapshot summary"></section>
+
+  <section class="controls" aria-label="Board controls">
+    <label>Search
+      <input type="search" id="q" placeholder="Protocol name or slug">
+    </label>
+    <label>Category
+      <select id="f-category"></select>
+    </label>
+    <label>Chain
+      <select id="f-chain"></select>
+    </label>
+    <label>Sort by
+      <select id="f-sort">
+        <option value="rank">Implied value (rank)</option>
+        <option value="tvl">TVL</option>
+        <option value="growth">7-day growth</option>
+        <option value="age">Age</option>
+      </select>
+    </label>
+    <label class="check">
+      <input type="checkbox" id="f-watch"> Watchlist only
+    </label>
+    <span class="count" id="row-count"></span>
+  </section>
+
+  <section id="detail" hidden></section>
+  <section id="board" aria-label="Ranked board"></section>
+
+  <section class="method" id="method">
+    <h2>How a value is made</h2>
+    <p>
+      A launch is worth what the market already pays for comparable live protocols.
+      For each category this radar takes the <strong>median market-cap / TVL ratio of that
+      category's live-token protocols</strong> in the same snapshot, blends it with the global
+      median, then adjusts each pre-token protocol's TVL by its <strong>7-day growth</strong>,
+      its <strong>age</strong> (days since DefiLlama began tracking it, spent with no token
+      recorded) and its <strong>chain breadth</strong>.
+      Implied value = TVL &times; blended multiple &times; growth factor &times; maturity
+      factor &times; breadth factor. Every factor is printed on every row — disagree with one
+      and you can recompute the board by hand. A protocol here <em>records no token</em> in the
+      snapshot; that is DefiLlama's record, not proof none exists. Implied values are this
+      model's own claim, not a prediction that a token will be issued.
+    </p>
+    <div id="category-multiples"></div>
+  </section>
+
+  <section class="live" id="live">
+    <h2>The yardstick: live peers</h2>
+    <p>These protocols already trade. Their market-cap / TVL ratios are the evidence the
+    pre-token values above are built from — the model invents nothing.</p>
+    <div id="live-rows"></div>
+  </section>
+
+  <footer>
+    <p id="foot-note"></p>
+  </footer>
+</main>
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
